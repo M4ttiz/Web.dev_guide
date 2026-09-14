@@ -1,11 +1,30 @@
 "use strict";
 
 const STORAGE_KEY = "html-css-lab-v4";
+const LANGUAGE_KEY = "webdev_guide_lang";
 const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 const codeBlock = (source, language = "html") => `<div class="code-block"><pre><code class="language-${language}">${escapeHTML(source.trim())}</code></pre></div>`;
 const solutionBlock = (source, explanation, language = "html") => `<details><summary>Mostra una soluzione ragionata</summary><div class="solution-content"><p>${explanation}</p>${codeBlock(source, language)}</div></details>`;
 const note = text => `<p class="note">${text}</p>`;
 const pitfalls = text => `<p class="pitfall"><strong>Trappole ed errori comuni:</strong> ${text}</p>`;
+
+const translations = {
+  en: {
+    skipContent: "Skip to content", sidebarKicker: "Interactive lab", sidebarDescription: "Learn structure, write code, and check what you know.", courseNav: "Course lessons", progressTitle: "Overall progress", sidebarNote: "Complete the quiz or use the completion button to unlock the next lesson.", headerOverline: "Interactive course · HTML and CSS", headerTitle: "Build to understand.", headerDescription: "Short theory, editable code, and immediate feedback at every step.", navigate: "navigate", previous: "← Previous", complete: "Mark as complete", incomplete: "Mark as incomplete", next: "Next →", step: "Step", completed: "Completed", locked: "Locked", objectives: "objectives completed", keyConcepts: "Key concepts", guidedExample: "Guided example", playground: "Live code playground", playgroundIntro: "Edit HTML and CSS: the preview updates after a short delay.", structure: "Structure", presentation: "Presentation", preview: "Preview", live: "Live", resetCode: "Reset code", previewReady: "Preview ready.", previewUpdated: "Preview updated.", exercise: "Exercise", quiz: "Knowledge check", chooseAnswer: "Choose an answer", check: "Check answer", correct: "Correct answer.", wrong: "Incorrect answer. Try again after reviewing the lesson.", chooseFirst: "Choose an answer before checking.", quizPrompt: "Choose an answer to unlock the next lesson.", showSolution: "Show a worked solution", pitfalls: "Common pitfalls:", languageLabel: "Select language", keyboard: "Keyboard shortcuts", lessonNav: "Lesson navigation", brandLabel: "HTML and CSS Lab, first step", themeDark: "Enable dark mode", themeLight: "Enable light mode"
+  },
+  it: {
+    skipContent: "Vai al contenuto", sidebarKicker: "Laboratorio interattivo", sidebarDescription: "Impara la struttura, prova il codice, verifica ciò che sai.", courseNav: "Lezioni del corso", progressTitle: "Progresso globale", sidebarNote: "Completa il quiz o usa il pulsante di completamento per sbloccare la lezione successiva.", headerOverline: "Corso interattivo · HTML e CSS", headerTitle: "Costruisci per capire.", headerDescription: "Teoria breve, codice modificabile e feedback immediato in ogni step.", navigate: "naviga", previous: "← Precedente", complete: "Segna come completato", incomplete: "Segna come da completare", next: "Successivo →", step: "Step", completed: "Completato", locked: "Bloccato", objectives: "obiettivi completati", keyConcepts: "Concetti chiave", guidedExample: "Esempio guidato", playground: "Live code playground", playgroundIntro: "Modifica HTML e CSS: l'anteprima viene aggiornata con debounce.", structure: "Struttura", presentation: "Presentazione", preview: "Anteprima", live: "Live", resetCode: "Reset codice", previewReady: "Anteprima pronta.", previewUpdated: "Anteprima aggiornata.", exercise: "Esercizio", quiz: "Quiz di verifica", chooseAnswer: "Scegli una risposta", check: "Verifica risposta", correct: "Risposta corretta.", wrong: "Risposta non corretta. Riprova dopo aver riletto.", chooseFirst: "Scegli una risposta prima di verificare.", quizPrompt: "Scegli una risposta per sbloccare il prossimo step.", showSolution: "Mostra una soluzione ragionata", pitfalls: "Trappole ed errori comuni:", languageLabel: "Seleziona lingua", keyboard: "Scorciatoie da tastiera", lessonNav: "Navigazione tra le lezioni", brandLabel: "HTML e CSS Lab, primo step", themeDark: "Attiva modalità scura", themeLight: "Attiva modalità chiara"
+  },
+  de: {
+    skipContent: "Zum Inhalt springen", sidebarKicker: "Interaktives Labor", sidebarDescription: "Strukturen lernen, Code schreiben und Wissen prüfen.", courseNav: "Kurslektionen", progressTitle: "Gesamtfortschritt", sidebarNote: "Schließe das Quiz ab oder markiere die Lektion, um die nächste freizuschalten.", headerOverline: "Interaktiver Kurs · HTML und CSS", headerTitle: "Bauen, um zu verstehen.", headerDescription: "Kurze Theorie, editierbarer Code und direktes Feedback in jedem Schritt.", navigate: "Navigation", previous: "← Zurück", complete: "Als erledigt markieren", incomplete: "Als offen markieren", next: "Weiter →", step: "Schritt", completed: "Erledigt", locked: "Gesperrt", objectives: "Ziele abgeschlossen", keyConcepts: "Kernkonzepte", guidedExample: "Geführtes Beispiel", playground: "Live-Code-Spielplatz", playgroundIntro: "Bearbeite HTML und CSS: Die Vorschau wird kurz danach aktualisiert.", structure: "Struktur", presentation: "Darstellung", preview: "Vorschau", live: "Live", resetCode: "Code zurücksetzen", previewReady: "Vorschau bereit.", previewUpdated: "Vorschau aktualisiert.", exercise: "Übung", quiz: "Wissenscheck", chooseAnswer: "Antwort auswählen", check: "Antwort prüfen", correct: "Richtige Antwort.", wrong: "Falsche Antwort. Lies die Lektion erneut und versuche es.", chooseFirst: "Wähle zuerst eine Antwort.", quizPrompt: "Wähle eine Antwort, um die nächste Lektion freizuschalten.", showSolution: "Musterlösung anzeigen", pitfalls: "Häufige Fehler:", languageLabel: "Sprache auswählen", keyboard: "Tastaturkürzel", lessonNav: "Lektionsnavigation", brandLabel: "HTML und CSS Lab, erster Schritt", themeDark: "Dunkelmodus aktivieren", themeLight: "Hellmodus aktivieren"
+  }
+};
+
+const stepLabels = {
+  en: ["Document structure", "Semantic text", "Lists and links", "Accessible images", "Data tables", "Forms and advanced inputs", "Layout semantics", "CSS: linking and syntax", "CSS: selectors", "CSS: box model", "Text, fonts and colors", "Div and positioning", "Advanced Flexbox", "CSS Grid", "CSS Position", "Responsive design", "Final project: personal portfolio"],
+  it: ["Struttura del documento", "Testo semantico", "Liste e collegamenti", "Immagini accessibili", "Tabelle di dati", "Form e input avanzati", "Semantica di layout", "CSS: collegamento e sintassi", "CSS: selettori", "CSS: box model", "Testo, font e colori", "Div e posizionamento", "Flexbox avanzato", "CSS Grid", "CSS Position", "Responsive design", "Progetto finale: portfolio personale"],
+  de: ["Dokumentstruktur", "Semantischer Text", "Listen und Links", "Barrierefreie Bilder", "Datentabellen", "Formulare und erweiterte Eingaben", "Layout-Semantik", "CSS: Verknüpfung und Syntax", "CSS: Selektoren", "CSS: Box-Modell", "Text, Schriften und Farben", "Div und Positionierung", "Fortgeschrittenes Flexbox", "CSS Grid", "CSS Position", "Responsives Design", "Abschlussprojekt: persönliches Portfolio"]
+};
 
 const steps = [
   { id: 1, title: "Struttura del documento", short: "Fondamenta HTML", theory: `<p>HTML definisce struttura e significato. Il doctype attiva gli standard, html dichiara la lingua, head contiene metadati e body contiene il contenuto visibile.</p><ul><li><code>meta charset</code> interpreta correttamente i caratteri.</li><li><code>viewport</code> adatta la pagina ai dispositivi mobili.</li><li><code>title</code> identifica la scheda, mentre <code>h1</code> identifica il contenuto.</li></ul>${note("Mantieni separati metadati e contenuto.")}`, example: "Documento HTML minimo", exampleHTML: `<!doctype html>\n<html lang="it">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>Laboratorio</title>\n</head>\n<body>\n  <h1>Benvenuto</h1>\n  <p>Studio il web.</p>\n</body>\n</html>`, initialCodeHTML: `<h1>La mia pagina</h1>\n<p>Scrivi qui il contenuto.</p>`, exampleCSS: `body { max-width: 65ch; margin: 3rem auto; font-family: system-ui, sans-serif; }`, initialCodeCSS: `body { font-family: system-ui, sans-serif; }`, exercise: "Crea una pagina completa in italiano con metadati, titolo, h1 e paragrafo.", common: pitfalls("Dimenticare doctype, lang o viewport; inserire h1 dentro head."), solution: solutionBlock(`<h1>Mi chiamo Giulia</h1>\n<p>Studio informatica per creare strumenti utili.</p>`, "La struttura separa configurazione e contenuti."), quiz: { question: "Dove si trova il contenuto visibile?", options: ["head", "body", "title", "meta"], answer: 1, explanation: "body contiene ciò che la persona vede." } },
@@ -28,6 +47,48 @@ const steps = [
   { id: 17, title: "Progetto finale: portfolio personale", short: "Integrare tutto", theory: `<p>Il progetto finale integra semantica, form, CSS, layout, responsive design e accessibilità in un portfolio completo. Parti da obiettivo e contenuti, poi costruisci sistema visivo e interazioni.</p><ul><li>Hero con proposta di valore e call to action.</li><li>Progetti con problema, ruolo, tecnologie e risultato.</li><li>Competenze, percorso, contatti e footer.</li><li>Focus visibile, label, alt, contrasto e ordine logico.</li><li>Verifica link, form, console, responsive e contenuti reali.</li></ul>${codeBlock(`<header>...</header><main><section class="hero">...</section><section id="projects">...</section><section id="skills">...</section><section id="contact">...</section></main><footer>...</footer>`)}${pitfalls("Presentare solo titoli, immagini senza alt, form senza label e layout che si rompe su mobile.")}`, example: "Portfolio completo responsive", exampleHTML: `<header class="portfolio-header"><a class="logo" href="#top">Marta.dev</a><nav aria-label="Principale"><a href="#projects">Progetti</a><a href="#contact">Contatti</a></nav></header><main id="top"><section class="portfolio-hero"><p>STUDENTESSA · FRONT-END</p><h1>Costruisco interfacce che aiutano.</h1><p>Esperienze web chiare, accessibili e responsive.</p><a class="button" href="#projects">Vedi i progetti</a></section><section id="projects" class="portfolio-section"><h2>Progetti recenti</h2><div class="project-grid"><article><h3>Study planner</h3><p>Dashboard per organizzare lo studio.</p></article><article><h3>Form semplici</h3><p>Feedback chiaro e validazione accessibile.</p></article></div></section><section id="contact" class="portfolio-section"><h2>Parliamone</h2><form><label for="email">Email</label><input id="email" name="email" type="email" required><label for="message">Messaggio</label><textarea id="message" name="message" required></textarea><button class="button">Invia</button></form></section></main><footer>© 2026 Marta.dev</footer>`, initialCodeHTML: `<header><a href="#top">Il mio nome</a><nav><a href="#work">Lavori</a><a href="#contact">Contatti</a></nav></header><main id="top"><section class="hero"><h1>Creo per il web.</h1><p>Una breve presentazione.</p></section><section id="work"><h2>Progetti</h2></section><section id="contact"><h2>Contatti</h2></section></main><footer>© Il mio portfolio</footer>`, exampleCSS: `:root { --ink: #202725; --paper: #fffdf9; --teal: #146c68; --coral: #d4472d; --line: #d8d6ca; }\n* { box-sizing: border-box; }\nbody { margin: 0; background: var(--paper); color: var(--ink); font-family: system-ui; line-height: 1.6; }\n.portfolio-header { display: flex; justify-content: space-between; padding: 1.2rem 5vw; border-bottom: 1px solid var(--line); }\n.portfolio-hero, .portfolio-section { width: min(100% - 2rem, 72rem); margin-inline: auto; }\n.portfolio-hero { padding: clamp(5rem, 13vw, 11rem) 0; }\n.portfolio-hero h1 { max-width: 10ch; font-size: clamp(3rem, 8vw, 7rem); line-height: .92; }\n.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }\n.project-grid article { padding: 2rem; border: 1px solid var(--line); }\n@media (max-width: 42rem) { .portfolio-header { flex-direction: column; } .project-grid { grid-template-columns: 1fr; } }`, initialCodeCSS: `body { margin: 0; font-family: system-ui; color: #202725; }\nheader { display: flex; justify-content: space-between; padding: 1rem 5vw; }\n.hero, main section { width: min(100% - 2rem, 68rem); margin-inline: auto; padding: 5rem 0; }`, exercise: "Realizza un portfolio completo da zero con hero, nav, almeno tre progetti, competenze, form contatti, footer, focus accessibile e responsive mobile-first.", common: pitfalls("Nessun risultato concreto, markup duplicato, immagini senza alt, nav illeggibile e form senza label."), solution: solutionBlock(`<header><a href="#top">Nome Cognome</a><nav aria-label="Principale"><a href="#work">Lavori</a><a href="#contact">Contatti</a></nav></header><main id="top"><section class="hero"><p>FRONT-END DEVELOPER</p><h1>Progetto esperienze accessibili.</h1><a href="#work">Scopri i lavori</a></section><section id="work"><h2>Progetti</h2><article><h3>Nome progetto</h3><p>Problema, soluzione e risultato.</p></article></section><section id="contact"><h2>Contatti</h2><form><label for="mail">Email</label><input id="mail" name="mail" type="email" required><button type="submit">Invia</button></form></section></main><footer>© 2026</footer>`, "Sostituisci i contenuti demo con il tuo percorso e risultati reali."), quiz: { question: "Qual è la priorità di un portfolio finale?", options: ["Solo animazioni", "Contenuti chiari, accessibilità e responsive", "Nascondere progetti su mobile", "Molti id per lo stile"], answer: 1, explanation: "Un portfolio deve comunicare valore e restare usabile su ogni dispositivo." } }
 ];
 
+const lessonCopy = {
+  en: {
+    theory: "This lesson explains the core ideas of {title}. Use the example to understand the structure, then experiment in the playground.",
+    example: "A practical {title} example",
+    exercise: "Create a small example about {title} and check that the structure is clear, accessible, and responsive.",
+    common: "Keep the markup meaningful, test it at different widths, and verify the result with keyboard navigation.",
+    solution: "This solution keeps the structure simple and makes the main idea easy to inspect.",
+    quiz: "What is the main focus of this lesson?",
+    options: ["The lesson topic", "Only visual decoration", "A browser setting", "An unrelated document"]
+  },
+  de: {
+    theory: "Diese Lektion erklärt die wichtigsten Ideen zu {title}. Nutze das Beispiel, probiere den Code aus und überprüfe das Ergebnis im Playground.",
+    example: "Ein praktisches Beispiel zu {title}",
+    exercise: "Erstelle ein kleines Beispiel zu {title} und prüfe, ob Struktur, Zugänglichkeit und Responsive-Verhalten stimmen.",
+    common: "Verwende sinnvolles Markup, teste verschiedene Bildschirmbreiten und überprüfe die Tastaturbedienung.",
+    solution: "Diese Lösung hält die Struktur einfach und macht die zentrale Idee leicht überprüfbar.",
+    quiz: "Was ist der Schwerpunkt dieser Lektion?",
+    options: ["Das Thema dieser Lektion", "Nur dekoratives Design", "Eine Browsereinstellung", "Ein unabhängiges Dokument"]
+  }
+};
+
+function localizedStep(step) {
+  const title = stepLabels[language][step.id - 1] || step.title;
+  if (language === "it") return { ...step, title };
+  const copy = lessonCopy[language];
+  const fill = text => text.replaceAll("{title}", title);
+  const htmlTitle = escapeHTML(title);
+  return {
+    ...step,
+    title,
+    short: title,
+    theory: `<p>${fill(copy.theory)}</p>`,
+    example: fill(copy.example),
+    exampleHTML: `<article><h1>${htmlTitle}</h1><p>${language === "en" ? "Explore the structure and edit it below." : "Untersuche die Struktur und bearbeite sie unten."}</p></article>`,
+    initialCodeHTML: `<h1>${htmlTitle}</h1>\n<p>${language === "en" ? "Write your example here." : "Schreibe hier dein Beispiel."}</p>`,
+    exercise: fill(copy.exercise),
+    common: `<p class="pitfall"><strong>${t("pitfalls")}</strong> ${copy.common}</p>`,
+    solution: solutionBlock(`<h1>${htmlTitle}</h1>\n<p>${language === "en" ? "A clear, accessible example." : "Ein klares, zugängliches Beispiel."}</p>`, copy.solution),
+    quiz: { question: fill(copy.quiz), options: copy.options, answer: 0, explanation: language === "en" ? "The lesson topic is the key idea to practise." : "Das Thema der Lektion ist die zentrale Idee zum Üben." }
+  };
+}
+
 function loadState() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
@@ -43,6 +104,7 @@ function loadState() {
 }
 
 const state = loadState();
+let language = ["en", "it", "de"].includes(localStorage.getItem(LANGUAGE_KEY)) ? localStorage.getItem(LANGUAGE_KEY) : "en";
 const ui = {
   body: document.body,
   list: document.querySelector("#step-list"),
@@ -53,7 +115,8 @@ const ui = {
   previous: document.querySelector("#previous"),
   complete: document.querySelector("#complete"),
   next: document.querySelector("#next"),
-  theme: document.querySelector("#theme-toggle")
+  theme: document.querySelector("#theme-toggle"),
+  languageButtons: document.querySelectorAll(".language-button")
 };
 let currentIndex = 0;
 let debounceId = 0;
@@ -67,13 +130,14 @@ function saveState() {
   return true;
 }
 
-function currentStep() { return steps[currentIndex]; }
+function t(key) { return translations[language][key] || translations.en[key] || key; }
+function currentStep() { return localizedStep(steps[currentIndex]); }
 function quizPassed(id) { return state.quizzes[String(id)] === true; }
 function complete(id) { return state.completed.has(id) || quizPassed(id); }
 function unlocked(index) { return index === 0 || complete(steps[index - 1].id); }
 
 function renderList() {
-  ui.list.innerHTML = steps.map((step, index) => `<li><a class="step-link${complete(step.id) ? " is-complete" : ""}${unlocked(index) ? "" : " is-locked"}" href="#step-${step.id}" data-index="${index}" aria-disabled="${!unlocked(index)}"${index === currentIndex ? " aria-current=\"step\"" : ""}><span class="step-number" aria-hidden="true">${complete(step.id) ? "✓" : step.id}</span><span class="step-meta"><strong>${escapeHTML(step.title)}</strong><small>${complete(step.id) ? "Completato" : unlocked(index) ? escapeHTML(step.short) : "Bloccato"}</small></span></a></li>`).join("");
+  ui.list.innerHTML = steps.map((step, index) => `<li><a class="step-link${complete(step.id) ? " is-complete" : ""}${unlocked(index) ? "" : " is-locked"}" href="#step-${step.id}" data-index="${index}" aria-disabled="${!unlocked(index)}"${index === currentIndex ? " aria-current=\"step\"" : ""}><span class="step-number" aria-hidden="true">${complete(step.id) ? "✓" : step.id}</span><span class="step-meta"><strong>${escapeHTML(stepLabels[language][index] || step.title)}</strong><small>${complete(step.id) ? t("completed") : unlocked(index) ? escapeHTML(language === "it" ? step.short : stepLabels[language][index]) : t("locked")}</small></span></a></li>`).join("");
 }
 
 function renderProgress() {
@@ -82,7 +146,7 @@ function renderProgress() {
   const percent = Math.round(done / total * 100);
   ui.progress.value = percent;
   ui.percent.textContent = `${percent}%`;
-  ui.progressText.textContent = `${done} di ${total} obiettivi completati`;
+  ui.progressText.textContent = `${done} / ${total} ${t("objectives")}`;
 }
 
 function renderLesson() {
@@ -111,8 +175,8 @@ function updatePreview(status) {
   const css = ui.lesson.querySelector("#css-editor");
   const preview = ui.lesson.querySelector("#preview");
   if (!html || !css || !preview) return;
-  preview.srcdoc = `<!doctype html><html lang="it"><head><meta charset="utf-8"><style>${css.value}</style></head><body>${html.value}</body></html>`;
-  if (status) ui.lesson.querySelector("#editor-status").textContent = "Anteprima aggiornata.";
+  preview.srcdoc = `<!doctype html><html lang="${language}"><head><meta charset="utf-8"><style>${css.value}</style></head><body>${html.value}</body></html>`;
+  if (status) ui.lesson.querySelector("#editor-status").textContent = t("previewUpdated");
 }
 
 function resetCode() { delete state.drafts[currentStep().id]; saveState(); render(); }
@@ -121,7 +185,7 @@ function checkQuiz() {
   const step = currentStep();
   const selected = ui.lesson.querySelector(`input[name="quiz-${step.id}"]:checked`);
   const feedback = ui.lesson.querySelector(".quiz-feedback");
-  if (!selected) { feedback.className = "quiz-feedback error"; feedback.textContent = "Scegli una risposta prima di verificare."; return; }
+  if (!selected) { feedback.className = "quiz-feedback error"; feedback.textContent = t("chooseFirst"); return; }
   const answer = Number(selected.value);
   const passed = answer === step.quiz.answer;
   state.quizzes[String(step.id)] = passed;
@@ -131,8 +195,48 @@ function checkQuiz() {
   renderProgress();
   renderNavigation();
   feedback.className = `quiz-feedback ${passed ? "success" : "error"}`;
-  feedback.textContent = passed ? `Risposta corretta. ${step.quiz.explanation}` : "Risposta non corretta. Riprova dopo aver riletto.";
+  feedback.textContent = passed ? `${t("correct")} ${step.quiz.explanation}` : t("wrong");
   ui.lesson.querySelectorAll(".quiz-option").forEach((option, index) => { option.classList.toggle("is-correct", passed && index === step.quiz.answer); option.classList.toggle("is-wrong", !passed && index === answer); });
+}
+
+function applyTranslations() {
+  document.documentElement.lang = language;
+  document.querySelectorAll("[data-i18n]").forEach(element => { element.textContent = t(element.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-attr]").forEach(element => element.dataset.i18nAttr.split(",").forEach(pair => { const [attribute, key] = pair.split(":"); element.setAttribute(attribute, t(key)); }));
+  ui.previous.textContent = t("previous");
+  ui.complete.textContent = state.completed.has(currentStep().id) ? t("incomplete") : t("complete");
+  ui.next.textContent = t("next");
+  ui.theme.setAttribute("aria-label", state.theme === "dark" ? t("themeLight") : t("themeDark"));
+  ui.languageButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.lang === language)));
+  const lesson = ui.lesson;
+  if (!lesson) return;
+  const eyebrow = lesson.querySelector(".eyebrow");
+  if (eyebrow) eyebrow.textContent = `${t("step")} ${currentStep().id} / ${steps.length}`;
+  const labels = lesson.querySelectorAll(".theory-card h3, .example-card h3, .playground-card h3, .exercise-card h3, .quiz-card h3");
+  ["keyConcepts", "guidedExample", "playground", "exercise", "quiz"].forEach((key, index) => { if (labels[index]) labels[index].textContent = t(key); });
+  const playgroundIntro = lesson.querySelector(".playground-intro");
+  if (playgroundIntro) playgroundIntro.textContent = t("playgroundIntro");
+  const editorLabels = lesson.querySelectorAll(".editor-label span");
+  if (editorLabels[0]) editorLabels[0].textContent = t("structure");
+  if (editorLabels[1]) editorLabels[1].textContent = t("presentation");
+  const previewLabel = lesson.querySelector(".preview-label span");
+  if (previewLabel) previewLabel.textContent = t("preview");
+  const liveLabel = lesson.querySelector(".live-indicator");
+  if (liveLabel) liveLabel.textContent = t("live");
+  const reset = lesson.querySelector("#reset-code");
+  if (reset) reset.textContent = t("resetCode");
+  const status = lesson.querySelector("#editor-status");
+  if (status) status.textContent = t("previewReady");
+  const preview = lesson.querySelector("#preview");
+  if (preview) preview.title = t("preview");
+  const summary = lesson.querySelector("summary");
+  if (summary) summary.textContent = t("showSolution");
+  const check = lesson.querySelector("#check-quiz");
+  if (check) check.textContent = t("check");
+  const legend = lesson.querySelector(".quiz-options legend");
+  if (legend) legend.textContent = t("chooseAnswer");
+  const feedback = lesson.querySelector(".quiz-feedback");
+  if (feedback && !Object.prototype.hasOwnProperty.call(state.quizzes, String(currentStep().id))) feedback.textContent = t("quizPrompt");
 }
 
 function renderNavigation() {
@@ -140,11 +244,11 @@ function renderNavigation() {
   ui.previous.disabled = currentIndex === 0;
   ui.next.disabled = currentIndex === steps.length - 1 || !complete(step.id);
   const manuallyComplete = state.completed.has(step.id);
-  ui.complete.textContent = manuallyComplete ? "Segna come da completare" : "Segna come completato";
+  ui.complete.textContent = manuallyComplete ? t("incomplete") : t("complete");
   ui.complete.setAttribute("aria-pressed", String(manuallyComplete));
 }
 
-function render() { renderList(); renderLesson(); renderProgress(); renderNavigation(); }
+function render() { renderList(); renderLesson(); renderProgress(); renderNavigation(); applyTranslations(); }
 
 function selectStep(index, updateHash = true) {
   if (index < 0 || index >= steps.length || !unlocked(index)) return;
@@ -158,13 +262,18 @@ ui.list.addEventListener("click", event => { const link = event.target.closest("
 ui.previous.addEventListener("click", () => selectStep(currentIndex - 1));
 ui.next.addEventListener("click", () => selectStep(currentIndex + 1));
 ui.complete.addEventListener("click", () => { const id = currentStep().id; state.completed.has(id) ? state.completed.delete(id) : state.completed.add(id); saveState(); renderList(); renderProgress(); renderNavigation(); });
-ui.theme.addEventListener("click", () => { state.theme = state.theme === "dark" ? "light" : "dark"; ui.body.dataset.theme = state.theme; ui.theme.textContent = state.theme === "dark" ? "☼" : "◐"; ui.theme.setAttribute("aria-pressed", String(state.theme === "dark")); ui.theme.setAttribute("aria-label", state.theme === "dark" ? "Attiva modalità chiara" : "Attiva modalità scura"); saveState(); });
+ui.languageButtons.forEach(button => button.addEventListener("click", () => {
+  language = button.dataset.lang;
+  localStorage.setItem(LANGUAGE_KEY, language);
+  render();
+}));
+ui.theme.addEventListener("click", () => { state.theme = state.theme === "dark" ? "light" : "dark"; ui.body.dataset.theme = state.theme; ui.theme.textContent = state.theme === "dark" ? "☼" : "◐"; ui.theme.setAttribute("aria-pressed", String(state.theme === "dark")); ui.theme.setAttribute("aria-label", state.theme === "dark" ? t("themeLight") : t("themeDark")); saveState(); });
 document.addEventListener("keydown", event => { const tag = document.activeElement?.tagName; if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) return; if (event.key === "ArrowLeft") { event.preventDefault(); selectStep(currentIndex - 1); } if (event.key === "ArrowRight" && complete(currentStep().id)) { event.preventDefault(); selectStep(currentIndex + 1); } });
 
 ui.body.dataset.theme = state.theme;
 ui.theme.textContent = state.theme === "dark" ? "☼" : "◐";
 ui.theme.setAttribute("aria-pressed", String(state.theme === "dark"));
-ui.theme.setAttribute("aria-label", state.theme === "dark" ? "Attiva modalità chiara" : "Attiva modalità scura");
+ui.theme.setAttribute("aria-label", state.theme === "dark" ? t("themeLight") : t("themeDark"));
 const hashId = Number(location.hash.replace("#step-", ""));
 const hashIndex = steps.findIndex(step => step.id === hashId);
 selectStep(hashIndex >= 0 && unlocked(hashIndex) ? hashIndex : 0, false);

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio interattivo per imparare HTML e CSS con teoria, quiz e codice eseguibile.">
+  <title>HTML & CSS Lab</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Vai al contenuto</a>
+  <aside class="sidebar" aria-label="Navigazione del corso">
+    <div class="sidebar-topline">
+      <a class="brand" href="#step-1" aria-label="HTML e CSS Lab, primo step">
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span>HTML <span aria-hidden="true">&amp;</span> CSS Lab</span>
+      </a>
+      <button id="theme-toggle" class="icon-button" type="button" aria-label="Attiva modalità scura" aria-pressed="false">◐</button>
+    </div>
+    <p class="sidebar-kicker">Laboratorio interattivo</p>
+    <p class="sidebar-description">Impara la struttura, prova il codice, verifica ciò che sai.</p>
+    <nav aria-label="Lezioni del corso"><ol id="step-list" class="step-list"></ol></nav>
+    <section class="course-progress" aria-labelledby="progress-title">
+      <div class="progress-heading"><h2 id="progress-title">Progresso globale</h2><strong id="progress-percent">0%</strong></div>
+      <progress id="progress" max="100" value="0">0%</progress>
+      <p id="progress-text" role="status">0 di 10 obiettivi completati</p>
+    </section>
+    <p class="sidebar-note">Completa il quiz o usa il pulsante di completamento per sbloccare la lezione successiva.</p>
+  </aside>
+  <main id="content" class="main">
+    <header class="page-header">
+      <div>
+        <p class="overline">Corso interattivo · HTML e CSS</p>
+        <h1>Costruisci per capire.</h1>
+        <p>Teoria breve, codice modificabile e feedback immediato in ogni step.</p>
+      </div>
+      <div class="keyboard-hint" aria-label="Scorciatoie da tastiera"><kbd>←</kbd><kbd>→</kbd><span>naviga</span></div>
+    </header>
+    <div id="lesson" aria-live="polite"></div>
+    <footer class="lesson-navigation" aria-label="Navigazione tra le lezioni">
+      <button id="previous" class="button secondary" type="button">← Precedente</button>
+      <button id="complete" class="button secondary" type="button" aria-pressed="false">Segna come completato</button>
+      <button id="next" class="button primary" type="button">Successivo →</button>
+    </footer>
+    <noscript><section class="noscript-message"><h2>JavaScript necessario</h2><p>Attiva JavaScript per usare editor, anteprima live, quiz e salvataggio dei progressi.</p></section></noscript>
+  </main>
+</body>
+</html>

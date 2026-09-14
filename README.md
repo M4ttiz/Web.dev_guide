@@ -2,6 +2,16 @@
 
 Web.dev Guide è un corso interattivo, statico e senza dipendenze per imparare HTML e CSS direttamente nel browser.
 
+## Apri il corso online
+
+<p align="center">
+	<a href="https://m4ttiz.github.io/Web.dev_guide/">
+		<strong>🚀 Apri Web.dev Guide</strong>
+	</a>
+</p>
+
+Per seguire il corso, studiare la teoria, svolgere gli esercizi e usare il Live Playground **non è necessario clonare o scaricare questa repository**: apri direttamente il [sito web live](https://m4ttiz.github.io/Web.dev_guide/) in un browser moderno.
+
 ## Funzionalità
 
 - Single-page application realizzata con JavaScript vanilla.
@@ -21,7 +31,13 @@ Web.dev Guide è un corso interattivo, statico e senza dipendenze per imparare H
 
 È sufficiente un browser moderno. Non sono necessari Node.js, un bundler o dipendenze da installare.
 
-## Avvio locale
+## Uso online
+
+Apri il [sito pubblico](https://m4ttiz.github.io/Web.dev_guide/) per iniziare subito. Il corso funziona direttamente dal browser e salva i progressi, le risposte ai quiz, le bozze e la preferenza del tema nel `localStorage` del dispositivo.
+
+## Sviluppo e contributi
+
+Clona o scarica il codice **solo se vuoi modificare il sorgente, lavorare in locale o contribuire al progetto**.
 
 1. Clona la repository:
 
@@ -37,6 +53,8 @@ Web.dev Guide è un corso interattivo, statico e senza dipendenze per imparare H
 	```
 
 3. Apri `http://localhost:8000` nel browser.
+
+Per proporre modifiche, aggiorna i file sorgente, verifica il comportamento in locale e invia un commit o una pull request.
 
 ## Pubblicazione con GitHub Pages
 
